@@ -1,61 +1,90 @@
-﻿// MatrixSolver.cpp : Defines the entry point for the application.
-//
-
-#include "MatrixSolver.h"
+﻿#include "MatrixSolver.h"
 #include <vector>
+#include <iostream>
+#include <string>
+#include "TestMatrixSolver.h"
 
+template <typename T>
+std::vector<std::vector<T>> MatrixA;
 
-std::vector<std::vector<float>> MatrixA,MatrixB;
+template <typename T>
+std::vector<std::vector<T>> MatrixB;
 
-static int PrintMatrix(std::vector<std::vector<float>> Matrix)
+template <typename T>
+static int PrintMatrix(std::vector<std::vector<T>> Matrix)
 {
-	if (&Matrix == NULL) return -1;
-	std::cout << "======================" << std::endl;
-	for (int i = 0; i < Matrix.size(); i++) {
-		std::cout << "\t";
-		for (int j = 0; j < Matrix[i].size(); j++)
-			std::cout << Matrix[i][j] << " ";
-		std::cout << std::endl;
-	}
-	std::cout << "======================" << std::endl;
-	return 1;
+    std::cout << "======================" << std::endl;
+    for (int i = 0; i < Matrix.size(); i++) {
+        std::cout << "\t";
+        for (int j = 0; j < Matrix[i].size(); j++)
+            std::cout << Matrix[i][j] << " ";
+        std::cout << std::endl;
+    }
+    std::cout << "======================" << std::endl;
+    return 1;
 }
 
-static bool IsMatrixRectangle(std::vector<std::vector<float>> MatrixA)
+template <typename T>
+static std::string ToStringVector(std::vector<T> vector)
 {
-	int size = MatrixA[0].size();
-	for (int i = 1; i < MatrixA.size(); i++)
-	{
-		if (size != MatrixA[i].size()) return false;
-	}
-	return true;
+    std::string s = "";
+    for (int i = 0; i < vector.size(); i++)
+    {
+        s += std::to_string(vector[i]) + " ";
+    }
+    return s;
 }
 
-//Can only multiply if the number of Columns of A is the same as the number of lines of B
-static bool CanMultiplyMatrix(std::vector<std::vector<float>> MatrixA, std::vector<std::vector<float>> MatrixB)
+template <typename T>
+static bool IsMatrixRectangle(std::vector<std::vector<T>> MatrixA)
 {
-	return (MatrixA[0].size() == MatrixB.size());
+    int size = MatrixA[0].size();
+    for (int i = 1; i < MatrixA.size(); i++)
+    {
+        if (size != MatrixA[i].size()) return false;
+    }
+    return true;
 }
 
-static std::vector<std::vector<float>> MultiplyMatrix(std::vector<std::vector<float>> MatrixA, std::vector<std::vector<float>> MatrixB)
+// Can only multiply if the number of columns of A is the same as the number of rows of B
+template <typename T>
+static bool CanMultiplyMatrix(std::vector<std::vector<T>> MatrixA, std::vector<std::vector<T>> MatrixB)
 {
-	std::vector<std::vector<float>> MatrixResult;
-	if (!CanMultiplyMatrix(MatrixA, MatrixB)) return MatrixResult;
-
-	return MatrixResult;
+    return (MatrixA[0].size() == MatrixB.size());
 }
+
+template <typename T>
+static std::vector<std::vector<T>> MultiplyMatrix(std::vector<std::vector<T>> MatrixA, std::vector<std::vector<T>> MatrixB)
+{
+    std::vector<std::vector<T>> MatrixResult;
+    if (!CanMultiplyMatrix(MatrixA, MatrixB)) return MatrixResult;
+
+    // Implement the actual matrix multiplication logic here
+
+    return MatrixResult;
+}
+
+template <typename T>
+static std::vector<T> ReturnTuple(std::vector<std::vector<T>> Matrix, int index)
+{
+    return Matrix[index];
+}
+
+template <typename T>
+static std::vector<T> ReturnColumn(std::vector<std::vector<T>> Matrix, int index)
+{
+    std::vector<T> SubMatrixB;
+    for (int i = 0; i < Matrix.size(); i++)
+    {
+        SubMatrixB.push_back(Matrix[i][index]);
+    }
+    return SubMatrixB;
+}
+
 
 
 int main()
 {
-	MatrixA = 
-	{ 
-		{0,1,1},
-		{2,3,4},
-		{1,2,1}
-	};
-	PrintMatrix(MatrixA);
-
-	std::cout << MatrixA.size() << std::endl;
-	return 1;
+    TestMatrixSolver Test;
+    return 0;
 }
