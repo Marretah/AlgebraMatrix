@@ -2,7 +2,8 @@
 #include <vector>
 #include <iostream>
 #include <string>
-#include "TestMatrixSolver.h"
+//#include "TestMatrixSolver.h"
+#include "MatrixSolverTests.h"
 
 template <typename T>
 std::vector<std::vector<T>> MatrixA;
@@ -85,6 +86,6 @@ static std::vector<T> ReturnColumn(std::vector<std::vector<T>> Matrix, int index
 
 int main()
 {
-    TestMatrixSolver Test;
+    RunTests();
     return 0;
 }
