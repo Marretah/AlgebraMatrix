@@ -5,6 +5,6 @@
 void RunTests();
 void TestReturnTuple();
 void TestReturnColumn();
-void TestMatrixMultiplication();
+void TestMatrixCanMultiplication();
 
 #endif // MATRIXSOLVERTESTS_H

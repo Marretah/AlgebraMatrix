@@ -2,7 +2,6 @@
 #include <vector>
 #include <iostream>
 #include <string>
-//#include "TestMatrixSolver.h"
 #include "MatrixSolverTests.h"
 
 template <typename T>
@@ -62,6 +61,21 @@ static std::vector<std::vector<T>> MultiplyMatrix(std::vector<std::vector<T>> Ma
 
     // Implement the actual matrix multiplication logic here
 
+    // 1 2  
+    // 3 4
+    // X
+    // 5 6
+    // 7 8
+    // =
+    // 1*5+2*7 1*6+2*8
+    // 3*5+4*7 3*6+4*8
+    for (int i = 0; i < MatrixA.size(); i++)
+    {
+        for (int j = 0; i < MatrixA.size(); j++)
+        { 
+            MatrixResult[i][j] = ReturnTuple(MatrixA, i)[i] * ReturnColumn(MatrixB, i)[j];
+        }
+    }
     return MatrixResult;
 }
 

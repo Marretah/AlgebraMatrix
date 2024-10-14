@@ -27,7 +27,7 @@ bool CanMultiplyMatrix(const std::vector<std::vector<T>>& MatrixA, const std::ve
 void RunTests() {
     TestReturnTuple();
     TestReturnColumn();
-    TestMatrixMultiplication();
+    TestMatrixCanMultiplication();
     std::cout << "All tests passed!" << std::endl;
 }
 
@@ -57,7 +57,7 @@ void TestReturnColumn() {
     std::cout << "TestReturnColumn passed." << std::endl;
 }
 
-void TestMatrixMultiplication() {
+void TestMatrixCanMultiplication() {
     std::vector<std::vector<int>> matrixA = {
         {1, 2, 3},
         {4, 5, 6}
@@ -68,7 +68,22 @@ void TestMatrixMultiplication() {
         {11, 12}
     };
     bool canMultiply = CanMultiplyMatrix(matrixA, matrixB);
-
     assert(canMultiply == true);
     std::cout << "TestMatrixMultiplication passed." << std::endl;
+}
+
+void TestMatrixMultiplication()
+{
+    //https://matrix.reshish.com/multCalculation.php
+    std::vector<std::vector<int>> matrixA = {
+        {1, 2, 3},
+        {4, 5, 6}
+    };
+    std::vector<std::vector<int>> matrixB = {
+        {7, 8},
+        {9, 10},
+        {11, 12}
+    };
+
+
 }
