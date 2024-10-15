@@ -168,19 +168,44 @@ void TestSolveWithPartialPivot() {
     MatrixSolver<double>::PrintMatrix({ result }); // Wrap in a 2D vector for printing
     std::cout << std::string(20, '-') << std::endl; // Separator
 }
-void TestReturnMatrixDeterminant()
-{
-    const std::vector<std::vector<int>>& MatrixA =
+
+void TestReturnMatrixDeterminant() {
+    // Initialize a 2x2 matrix
+    std::vector<std::vector<int>> MatrixA =
     {
         {1, 2},
         {3, 4}
     };
 
-    // Correct expected determinant for a 2x2 matrix: (1*4) - (2*3)
-    const int expectedValue = (1 * 4) - (2 * 3);
+    // Calculate the expected determinant for the 2x2 matrix
+    int expectedValue = (1 * 4) - (2 * 3);
+    std::cout << "Testing 2x2 matrix determinant...\n";
+    std::cout << "Expected value: " << expectedValue << "\n";
 
     // Assert that the calculated determinant matches the expected value
-    assert(MatrixSolver<int>::ReturnMatrixDeterminant(MatrixA) == expectedValue);
+    int calculatedValue = MatrixSolver<int>::ReturnMatrixDeterminant(MatrixA);
+    std::cout << "Calculated value: " << calculatedValue << "\n";
+    assert(calculatedValue == expectedValue);
 
-    std::cout << "TestReturnMatrixDeterminant passed.\n";
+    // Update MatrixA to a 4x4 matrix
+    MatrixA =
+    {
+        {1, 2, 3, 4},
+        {5, 6, 7, 8},
+        {9, 10, 11, 12},
+        {13, 14, 15, 16}
+    };
+
+    // The expected determinant for this matrix should be 0
+    expectedValue = 0;
+    std::cout << "Testing 4x4 matrix determinant...\n";
+    std::cout << "Expected value: " << expectedValue << "\n";
+
+    // Assert that the calculated determinant matches the expected value
+    calculatedValue = MatrixSolver<int>::ReturnMatrixDeterminant(MatrixA);
+    std::cout << "Calculated value: " << calculatedValue << "\n";
+    assert(calculatedValue == expectedValue);
+
+    std::cout << "TestReturnMatrixDeterminant passed successfully.\n";
 }
+
