@@ -81,8 +81,9 @@ void TestMatrixMultiplication() {
     };
 
     // Call static method without instantiation
-    std::vector<std::vector<int>> result = MatrixSolver<int>::MultiplyMatrix(matrixA, matrixB);
-
-    assert(result == expected);
+    std::vector<std::vector<int>> resultA = MatrixSolver<int>::MultiplyMatrix(matrixA, matrixB);
+    std::vector<std::vector<int>> resultB = MatrixSolver<int>::MultiplyMatrixStepByStep(matrixA, matrixB);
+    assert(resultA == expected);
+    assert(resultB == expected);
     std::cout << "TestMatrixMultiplication passed." << std::endl;
 }

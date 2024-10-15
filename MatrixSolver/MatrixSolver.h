@@ -61,6 +61,40 @@ public:
         return MatrixResult;
     }
 
+    // Static function to multiply two matrices step by step
+    static std::vector<std::vector<T>> MultiplyMatrixStepByStep(const std::vector<std::vector<T>>& MatrixA, const std::vector<std::vector<T>>& MatrixB) {
+        std::vector<std::vector<T>> MatrixResult(MatrixA.size(), std::vector<T>(MatrixB[0].size()));
+
+        // Check if multiplication is possible
+        if (!CanMultiplyMatrix(MatrixA, MatrixB)) return MatrixResult;
+
+        // Iterate through each row of MatrixA
+        for (int i = 0; i < MatrixA.size(); i++) {
+            // Get the current row from MatrixA
+            std::vector<T> rowA = ReturnTuple(MatrixA, i);
+
+            // Iterate through each column of MatrixB
+            for (int j = 0; j < MatrixB[0].size(); j++) {
+                // Get the current column from MatrixB
+                std::vector<T> colB = ReturnColumn(MatrixB, j);
+
+                // Initialize the result for the current cell
+                T sum = 0;
+
+                // Compute the dot product of rowA and colB
+                for (int k = 0; k < rowA.size(); k++) {
+                    sum += rowA[k] * colB[k];
+                }
+
+                // Assign the computed sum to the result matrix
+                MatrixResult[i][j] = sum;
+            }
+        }
+
+        return MatrixResult;
+    }
+
+
     // Static function to return a tuple (row) from a matrix
     static std::vector<T> ReturnTuple(const std::vector<std::vector<T>>& Matrix, int index) {
         return Matrix[index];
