@@ -167,5 +167,3 @@ void TestSolveWithPartialPivot() {
     MatrixSolver<double>::PrintMatrix({ result }); // Wrap in a 2D vector for printing
     std::cout << std::string(20, '-') << std::endl; // Separator
 }
-
-
