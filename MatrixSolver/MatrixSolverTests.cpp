@@ -21,7 +21,6 @@ void TestReturnTuple() {
     };
     std::vector<int> expected = { 2, 3, 4 };
 
-    // Call static method without instantiation
     std::vector<int> result = MatrixSolver<int>::ReturnTuple(matrix, 1);
 
     assert(result == expected);
@@ -36,7 +35,6 @@ void TestReturnColumn() {
     };
     std::vector<int> expected = { 1, 3, 2 };
 
-    // Call static method without instantiation
     std::vector<int> result = MatrixSolver<int>::ReturnColumn(matrix, 1);
 
     assert(result == expected);

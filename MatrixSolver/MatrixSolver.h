@@ -8,8 +8,6 @@
 template <typename T>
 class MatrixSolver {
 public:
-    // Constructor (optional)
-    MatrixSolver() {}
 
     // Static function to print a matrix
     static int PrintMatrix(const std::vector<std::vector<T>>& Matrix) {
