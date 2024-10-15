@@ -19,6 +19,7 @@ void RunTests() {
     TestMatrixMultiplication();
     TestSolveWithoutPivot();
     TestSolveWithPartialPivot();
+    TestReturnMatrixDeterminant();
     std::cout << "\n" << std::string(20, '-') << std::endl;
     std::cout << "\nAll tests passed!\n" << std::endl;
 }
@@ -166,4 +167,20 @@ void TestSolveWithPartialPivot() {
     std::cout << "\nCalculated Solution: \n";
     MatrixSolver<double>::PrintMatrix({ result }); // Wrap in a 2D vector for printing
     std::cout << std::string(20, '-') << std::endl; // Separator
+}
+void TestReturnMatrixDeterminant()
+{
+    const std::vector<std::vector<int>>& MatrixA =
+    {
+        {1, 2},
+        {3, 4}
+    };
+
+    // Correct expected determinant for a 2x2 matrix: (1*4) - (2*3)
+    const int expectedValue = (1 * 4) - (2 * 3);
+
+    // Assert that the calculated determinant matches the expected value
+    assert(MatrixSolver<int>::ReturnMatrixDeterminant(MatrixA) == expectedValue);
+
+    std::cout << "TestReturnMatrixDeterminant passed.\n";
 }

@@ -106,19 +106,32 @@ public:
         }
         return SubMatrixB;
     }
+    // Helper function to detect zero pivots
+    static bool HasZeroPivot(const std::vector<std::vector<T>>& matrix) {
+        int n = matrix.size(); // Number of rows
+        for (int i = 0; i < n; i++) {
+            if (matrix[i][i] == 0) {
+                return true; // Found a zero pivot
+            }
+        }
+        return false; // No zero pivots found
+    }
 
-    // Function to perform Gaussian elimination without pivoting
+    // Solve Gaussian elimination without pivoting (with zero-pivot check)
     static std::vector<T> SolveGaussianEliminationWithoutPivot(const std::vector<std::vector<T>>& augmentedMatrix) {
         std::vector<std::vector<T>> matrix = augmentedMatrix; // Make a copy of the matrix
         int n = matrix.size(); // Number of rows
 
-        // Forward elimination
+        // Check if there are any zero pivots before proceeding
+        if (HasZeroPivot(matrix)) {
+            std::cerr << "Error: Matrix contains a zero pivot. Cannot solve without pivoting." << std::endl;
+            return {}; // Return empty solution
+        }
+
+        // Forward elimination (without pivoting)
         for (int i = 0; i < n; i++) {
+            // Eliminate all rows below row i
             for (int j = i + 1; j < n; j++) {
-                if (matrix[i][i] == 0) {
-                    std::cerr << "Error: Zero pivot element at row " << i << ". Cannot proceed without pivoting." << std::endl;
-                    return {};
-                }
                 T ratio = matrix[j][i] / matrix[i][i];
                 for (int k = i; k < matrix[0].size(); k++) {
                     matrix[j][k] -= ratio * matrix[i][k];
@@ -133,11 +146,13 @@ public:
             for (int j = i + 1; j < n; j++) {
                 solution[i] -= matrix[i][j] * solution[j];
             }
-            solution[i] /= matrix[i][i];
+            solution[i] /= matrix[i][i]; // Divide by the diagonal element
         }
 
         return solution;
     }
+
+
 
     // Function to perform Gaussian elimination with partial pivoting
     static std::vector<T> SolveGaussianEliminationWithPartialPivot(const std::vector<std::vector<T>>& augmentedMatrix) {
@@ -186,6 +201,18 @@ public:
 
         return solution;
     }
+
+    static T ReturnMatrixDeterminant(const std::vector<std::vector<T>>& MatrixA)
+    {
+        switch (MatrixA.size())
+        {
+        case 0:return 0;
+        case 1:return MatrixA[0][0];
+        case 2:return MatrixA[0][1] * MatrixA[1][0];
+        default: break;
+        }
+    }
+
 };
 
 #endif

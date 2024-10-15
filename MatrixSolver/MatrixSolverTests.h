@@ -9,5 +9,6 @@ void TestMatrixCanMultiplication();
 void TestMatrixMultiplication();
 void TestSolveWithoutPivot();
 void TestSolveWithPartialPivot();
+void TestReturnMatrixDeterminant();
 #endif // MATRIXSOLVERTESTS_H
 
