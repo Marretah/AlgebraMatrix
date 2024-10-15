@@ -4,22 +4,20 @@
 #include <vector>
 #include <iostream>
 #include <string>
+#include <iomanip>
 
 template <typename T>
 class MatrixSolver {
 public:
 
     // Static function to print a matrix
-    static int PrintMatrix(const std::vector<std::vector<T>>& Matrix) {
-        std::cout << "======================" << std::endl;
-        for (int i = 0; i < Matrix.size(); i++) {
-            std::cout << "\t";
-            for (int j = 0; j < Matrix[i].size(); j++)
-                std::cout << Matrix[i][j] << " ";
+    static void PrintMatrix(const std::vector<std::vector<T>>& matrix) {
+        for (const auto& row : matrix) {
+            for (const auto& value : row) {
+                std::cout << std::setw(10) << std::setprecision(4) << value << " ";
+            }
             std::cout << std::endl;
         }
-        std::cout << "======================" << std::endl;
-        return 1;
     }
 
     // Static function to convert a vector to a string
@@ -107,6 +105,86 @@ public:
             SubMatrixB.push_back(Matrix[i][index]);
         }
         return SubMatrixB;
+    }
+
+    // Function to perform Gaussian elimination without pivoting
+    static std::vector<T> SolveGaussianEliminationWithoutPivot(const std::vector<std::vector<T>>& augmentedMatrix) {
+        std::vector<std::vector<T>> matrix = augmentedMatrix; // Make a copy of the matrix
+        int n = matrix.size(); // Number of rows
+
+        // Forward elimination
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (matrix[i][i] == 0) {
+                    std::cerr << "Error: Zero pivot element at row " << i << ". Cannot proceed without pivoting." << std::endl;
+                    return {};
+                }
+                T ratio = matrix[j][i] / matrix[i][i];
+                for (int k = i; k < matrix[0].size(); k++) {
+                    matrix[j][k] -= ratio * matrix[i][k];
+                }
+            }
+        }
+
+        // Back substitution
+        std::vector<T> solution(n);
+        for (int i = n - 1; i >= 0; i--) {
+            solution[i] = matrix[i].back(); // The last column of the row is the constant term
+            for (int j = i + 1; j < n; j++) {
+                solution[i] -= matrix[i][j] * solution[j];
+            }
+            solution[i] /= matrix[i][i];
+        }
+
+        return solution;
+    }
+
+    // Function to perform Gaussian elimination with partial pivoting
+    static std::vector<T> SolveGaussianEliminationWithPartialPivot(const std::vector<std::vector<T>>& augmentedMatrix) {
+        std::vector<std::vector<T>> matrix = augmentedMatrix; // Make a copy of the matrix
+        int n = matrix.size(); // Number of rows
+
+        // Forward elimination with partial pivoting
+        for (int i = 0; i < n; i++) {
+            // Find the maximum element in the current column
+            int maxRow = i;
+            for (int k = i + 1; k < n; k++) {
+                if (std::abs(matrix[k][i]) > std::abs(matrix[maxRow][i])) {
+                    maxRow = k;
+                }
+            }
+
+            // Swap the maximum row with the current row
+            if (maxRow != i) {
+                std::swap(matrix[i], matrix[maxRow]);
+            }
+
+            // Check for zero pivot element
+            if (matrix[i][i] == 0) {
+                std::cerr << "Error: Zero pivot element at row " << i << ". The system may not have a unique solution." << std::endl;
+                return {};
+            }
+
+            // Eliminate entries below the pivot
+            for (int j = i + 1; j < n; j++) {
+                T ratio = matrix[j][i] / matrix[i][i];
+                for (int k = i; k < matrix[0].size(); k++) {
+                    matrix[j][k] -= ratio * matrix[i][k];
+                }
+            }
+        }
+
+        // Back substitution
+        std::vector<T> solution(n);
+        for (int i = n - 1; i >= 0; i--) {
+            solution[i] = matrix[i].back(); // The last column of the row is the constant term
+            for (int j = i + 1; j < n; j++) {
+                solution[i] -= matrix[i][j] * solution[j];
+            }
+            solution[i] /= matrix[i][i];
+        }
+
+        return solution;
     }
 };
 

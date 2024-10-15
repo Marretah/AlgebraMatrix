@@ -25,12 +25,17 @@
  */
 
 #include "MatrixSolver.h"
-#include "MatrixSolverTests.h" // Assuming you also have tests
+#include "MatrixSolverTests.h" 
+#define DEBUG_MODE true
+
 
 int main()
 {
-    // Running tests
-    RunTests();
+    if (DEBUG_MODE) 
+    {
+        RunTests();
+    }
+    
 
     return 0;
 }
